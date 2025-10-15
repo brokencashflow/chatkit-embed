@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>ChatKit Embed</title>
+  <style>html,body,#chat{height:100%;margin:0}</style>
+</head>
+<body>
+  <div id="chat"></div>
+  <script type="module">
+    // URL: https://esm.sh/@openai/chatkit-js  (ESM build)
+    import { ChatKitClient } from "https://esm.sh/@openai/chatkit-js";
+
+    const qs = new URLSearchParams(location.search);
+    const clientSecret = qs.get("secret"); // Bubble will append ?secret=...
+
+    const client = new ChatKitClient({
+      clientSecret,
+      selector: "#chat"
+    });
+
+    client.mount();
+  </script>
+</body>
+</html>
