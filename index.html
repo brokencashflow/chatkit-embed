@@ -3,23 +3,29 @@
 <head>
   <meta charset="utf-8" />
   <title>ChatKit Embed</title>
-  <style>html,body,#chat{height:100%;margin:0}</style>
+  <style>
+    html, body, #chat { height:100%; margin:0; }
+  </style>
 </head>
 <body>
   <div id="chat"></div>
   <script type="module">
-    // URL: https://esm.sh/@openai/chatkit-js  (ESM build)
-    import { ChatKitClient } from "https://esm.sh/@openai/chatkit-js";
+    // Import ChatKitClient from esm.sh with a pinned version
+    import { ChatKitClient } from "https://esm.sh/@openai/chatkit-js@0.1.0";
 
+    // Grab ?secret=... from the URL
     const qs = new URLSearchParams(location.search);
-    const clientSecret = qs.get("secret"); // Bubble will append ?secret=...
+    const clientSecret = qs.get("secret");
 
-    const client = new ChatKitClient({
-      clientSecret,
-      selector: "#chat"
-    });
-
-    client.mount();
+    if (!clientSecret) {
+      document.getElementById("chat").innerHTML = "<p>No client_secret provided.</p>";
+    } else {
+      const client = new ChatKitClient({
+        clientSecret,
+        selector: "#chat"
+      });
+      client.mount();
+    }
   </script>
 </body>
 </html>
